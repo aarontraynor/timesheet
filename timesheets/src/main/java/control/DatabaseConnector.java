@@ -1,4 +1,4 @@
-package main.java.control;
+package control;
 
 public class DatabaseConnector {
 	private String username;
