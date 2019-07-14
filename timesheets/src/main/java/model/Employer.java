@@ -8,7 +8,7 @@ package model;
 public class Employer {
 	private String companyName;
 	private double hourlyRate;
-	
+
 	/**
 	 * 
 	 * @param companyName the Employer's company name
@@ -32,7 +32,7 @@ public class Employer {
 	 * @param name the new company name of the Employer
 	 */
 	public void setCompanyName(String name) {
-		this.companyName = companyName;
+		this.companyName = name;
 	}
 
 	/**
