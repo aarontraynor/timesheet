@@ -20,6 +20,8 @@ public class MainWindow extends JFrame {
     private void init() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(1280, 720);
+        this.add(mainPanel);
+        this.setVisible(true);
     }
 
     public JPanel getMainPanel() {
@@ -28,6 +30,5 @@ public class MainWindow extends JFrame {
 
     public void setMainPanel(JPanel mainPanel) {
         this.mainPanel = mainPanel;
-
     }
 }

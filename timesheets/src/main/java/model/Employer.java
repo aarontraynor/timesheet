@@ -50,4 +50,9 @@ public class Employer {
 	public void setHourlyRate(double hourlyRate) {
 		this.hourlyRate = hourlyRate;
 	}
+
+	@Override
+	public String toString() {
+		return this.companyName;
+	}
 }
