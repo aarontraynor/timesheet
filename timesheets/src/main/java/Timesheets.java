@@ -7,6 +7,7 @@ import view.MainWindow;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.ResultSet;
 
 public class Timesheets {
     private static MainWindow program;
@@ -19,7 +20,6 @@ public class Timesheets {
             String password = JOptionPane.showInputDialog("Enter database password:");
             db = new Database(username, password, "localhost", 3306);
             dbc = new DatabaseConnector(db);
-            dbc.connect();
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
