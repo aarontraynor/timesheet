@@ -40,4 +40,13 @@ public class EmployerPanel extends JPanel {
 
         this.add(shifts, c);
     }
+
+    public void setName(String name) {
+        title.setText(name);
+    }
+
+    public void setVisible(boolean flag) {
+        title.setVisible(flag);
+        shifts.setVisible(flag);
+    }
 }

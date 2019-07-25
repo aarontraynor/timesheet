@@ -1,5 +1,6 @@
 package view;
 
+import control.EmployerSelectedListener;
 import model.Employer;
 
 import javax.swing.*;
@@ -7,7 +8,6 @@ import java.awt.*;
 
 public class EmployersTab extends JPanel {
     private EmployersSidebar sidebar;
-
     private EmployerPanel currentEmployer;
 
     public EmployersTab() {
@@ -18,6 +18,9 @@ public class EmployersTab extends JPanel {
     private void init() {
         sidebar = new EmployersSidebar();
         currentEmployer = new EmployerPanel();
+
+        EmployerSelectedListener esl = new EmployerSelectedListener(currentEmployer, sidebar);
+        sidebar.addEmployerSelectedListener(esl);
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

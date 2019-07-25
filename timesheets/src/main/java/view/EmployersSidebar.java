@@ -1,8 +1,11 @@
 package view;
 
+import control.EmployerSelectedListener;
+import control.NewEmployerListener;
 import model.Employer;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 
 public class EmployersSidebar extends JPanel {
@@ -43,7 +46,19 @@ public class EmployersSidebar extends JPanel {
         this.add(newEmployerButton, c);
     }
 
+    public void addEmployerSelectedListener(EmployerSelectedListener esl) {
+        employerList.addListSelectionListener(esl);
+    }
+
     public void addEmployer(Employer employer) {
         employerListModel.addElement(employer);
+    }
+
+    public Employer getSelectedEmployer() {
+        return employerListModel.getElementAt(employerList.getSelectedIndex());
+    }
+
+    public String getSelectedEmployerName() {
+        return employerListModel.getElementAt(employerList.getSelectedIndex()).getCompanyName();
     }
 }

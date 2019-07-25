@@ -2,38 +2,25 @@ package control;
 
 import model.Database;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class DatabaseConnector {
     private Database db;
-    private Connection con;
     private boolean dbConnected;
 
     public DatabaseConnector(Database db) {
         this.db = db;
-        dbConnected = connect();
+        dbConnected = false;
     }
 
-    public boolean connect() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jbdc:mysql://" + db.getDomain() + ":" + db.getPort() + "/timesheet", db.getUsername(), db.getPassword());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    public void disconnect() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public ResultSet executeQuery(String query) throws SQLException {
+        try(Connection con = DriverManager.getConnection("jdbc:mariadb://" + db.getDomain() + "/", db.getUsername(), db.getPassword())) {
+            try(Statement s = con.createStatement()) {
+                try(ResultSet rs = s.executeQuery(query)) {
+                    return rs;
+                }
+            }
         }
     }
 

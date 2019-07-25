@@ -1,3 +1,6 @@
+import control.DatabaseConnector;
+import control.EmployerSelectedListener;
+import model.Database;
 import model.Employer;
 import view.EmployersTab;
 import view.MainWindow;
@@ -6,7 +9,21 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Timesheets {
+    private static MainWindow program;
+    private static Database db;
+    private static DatabaseConnector dbc;
+
     public static void main(String[] args) {
+        try {
+            String username = JOptionPane.showInputDialog("Enter database username:");
+            String password = JOptionPane.showInputDialog("Enter database password:");
+            db = new Database(username, password, "localhost", 3306);
+            dbc = new DatabaseConnector(db);
+            dbc.connect();
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+
         Employer mapleblue = new Employer("MapleBlue Ltd.", 15.0);
         Employer svhealth = new Employer("SV Health Managers LLP", 15.0);
 
@@ -20,18 +37,14 @@ public class Timesheets {
         employersTab.addEmployer(mapleblue);
         employersTab.addEmployer(svhealth);
 
-        JPanel panel2 = new JPanel();
-        panel2.setSize(1280, 720);
-
-        JPanel panel3 = new JPanel();
-        panel3.setSize(1280, 720);
-
         tabs.addTab("Employers", employersTab);
-        tabs.addTab("Tab2", panel2);
-        tabs.addTab("Tab3", panel3);
 
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(tabs);
-        MainWindow program = new MainWindow("Timesheets", mainPanel);
+        program = new MainWindow("Timesheets", mainPanel);
+    }
+
+    public void readEmployers() {
+
     }
 }
