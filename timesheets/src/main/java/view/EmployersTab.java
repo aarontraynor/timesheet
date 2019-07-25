@@ -5,6 +5,7 @@ import model.Employer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class EmployersTab extends JPanel {
     private EmployersSidebar sidebar;
@@ -46,5 +47,11 @@ public class EmployersTab extends JPanel {
 
     public void addEmployer(Employer employer) {
         sidebar.addEmployer(employer);
+    }
+
+    public void addEmployers(ArrayList<Employer> employers) {
+        for(Employer e : employers) {
+            sidebar.addEmployer(e);
+        }
     }
 }

@@ -8,6 +8,8 @@ import view.MainWindow;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class Timesheets {
     private static MainWindow program;
@@ -24,9 +26,6 @@ public class Timesheets {
             JOptionPane.showMessageDialog(null, e.toString());
         }
 
-        Employer mapleblue = new Employer("MapleBlue Ltd.", 15.0);
-        Employer svhealth = new Employer("SV Health Managers LLP", 15.0);
-
         JPanel mainPanel = new JPanel();
         mainPanel.setSize(1280, 720);
 
@@ -34,17 +33,16 @@ public class Timesheets {
         tabs.setSize(1280, 720);
 
         EmployersTab employersTab = new EmployersTab();
-        employersTab.addEmployer(mapleblue);
-        employersTab.addEmployer(svhealth);
+        try {
+            employersTab.addEmployers(dbc.readEmployers());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
 
         tabs.addTab("Employers", employersTab);
 
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(tabs);
         program = new MainWindow("Timesheets", mainPanel);
-    }
-
-    public void readEmployers() {
-
     }
 }

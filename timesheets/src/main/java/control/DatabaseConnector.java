@@ -1,9 +1,12 @@
 package control;
 
 import model.Database;
+import model.Employer;
+import model.Shift;
 
 import javax.swing.*;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseConnector {
     private Database db;
@@ -14,15 +17,28 @@ public class DatabaseConnector {
         dbConnected = false;
     }
 
-    public ResultSet executeQuery(String query) throws SQLException {
-        try(Connection con = DriverManager.getConnection("jdbc:mariadb://" + db.getDomain() + "/", db.getUsername(), db.getPassword())) {
+    public ArrayList<Employer> readEmployers() throws SQLException {
+        ArrayList<Employer> employers = new ArrayList<>();
+
+        try(Connection con = DriverManager.getConnection("jdbc:mariadb://" + db.getDomain() + "/aarontraynor_timesheet", db.getUsername(), db.getPassword())) {
             try(Statement s = con.createStatement()) {
-                try(ResultSet rs = s.executeQuery(query)) {
-                    return rs;
+                try(ResultSet rs = s.executeQuery("SELECT * FROM EMPLOYERS")) {
+                    while(rs.next()) {
+                        int id = rs.getInt("ID");
+                        String name = rs.getString("NAME");
+                        double hourlyRate = rs.getDouble("SALARY");
+                        employers.add(new Employer(id, name, hourlyRate));
+                    }
                 }
             }
         }
+
+        return employers;
     }
+
+//    public ArrayList<Shift> readShiftsFromEmployer(int employerID) throws SQLException {
+//        // Change this method to read all shifts from all employers, then create a construct in memory
+//    }
 
     public String getDatabaseUsername() {
         return db.getUsername();

@@ -6,15 +6,18 @@ package model;
  *
  */
 public class Employer {
+	private int id;
 	private String companyName;
 	private double hourlyRate;
 
 	/**
-	 * 
+	 *
+	 * @param id the company's unique ID as found in the database
 	 * @param companyName the Employer's company name
 	 * @param hourlyRate the hourly rate of the Employer
 	 */
-	public Employer(String companyName, double hourlyRate) {
+	public Employer(int id, String companyName, double hourlyRate) {
+		this.id = id;
 		this.companyName = companyName;
 		this.hourlyRate = hourlyRate;
 	}
