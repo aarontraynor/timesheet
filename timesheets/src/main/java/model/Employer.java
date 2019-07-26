@@ -22,6 +22,10 @@ public class Employer {
 		this.hourlyRate = hourlyRate;
 	}
 
+	public int getCompanyID() {
+		return id;
+	}
+
 	/**
 	 *
 	 * @return the Employer's company name

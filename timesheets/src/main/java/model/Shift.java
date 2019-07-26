@@ -1,6 +1,7 @@
 package model;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Time;
 
 /**
  * 
@@ -8,36 +9,37 @@ import java.util.Date;
  *
  */
 public class Shift {
-	private Employer employer;
-	private Date startDateTime;
-	private Date endDateTime;
+	private int id;
+	private int employerID;
+	private Date startDate;
+	private Date endDate;
+	private Time startTime;
+	private Time endTime;
 	private int breakDuration;
-	
-	/**
-	 * 
-	 * @param employer the employer paying for the shift
-	 * @param startDateTime the date and time that the shift started
-	 * @param endDateTime the date and time that the shift ended
-	 */
-	public Shift(Employer employer, Date startDateTime, Date endDateTime) {
-		init(employer, startDateTime, endDateTime, 0);
+
+	public Shift(int employerID, Date startDate, Date endDate, Time startTime, Time endTime) {
+		init(employerID, startDate, endDate, startTime, endTime, 0);
+	}
+
+	public Shift(int employerID, Date startDate, Date endDate, Time startTime, Time endTime, int breakDuration) {
+		init(employerID, startDate, endDate, startTime, endTime, breakDuration);
 	}
 	
-	/**
-	 *
-	 * @param employer the employer paying for the shift
-	 * @param startDateTime the date and time that the shift started
-	 * @param endDateTime the date and time that the shift ended
-	 * @param breakDuration the length (in minutes) of any breaks during the shift
-	 */
-	public Shift(Employer employer, Date startDateTime, Date endDateTime, int breakDuration) {
-		init(employer, startDateTime, endDateTime, breakDuration);
-	}
-	
-	private void init(Employer employer, Date startDateTime, Date endDateTime, int breakDuration) {
-		this.employer = employer;
-		this.startDateTime = startDateTime;
-		this.endDateTime = endDateTime;
+	private void init(int employerID, Date startDate, Date endDate, Time startTime, Time endTime, int breakDuration) {
+		this.employerID = employerID;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.breakDuration = breakDuration;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String[] getDataAsArray() {
+		String[] ret = {startDate.toString(), startTime.toString(), endDate.toString(), endTime.toString(), "0"};
+		return ret;
 	}
 }

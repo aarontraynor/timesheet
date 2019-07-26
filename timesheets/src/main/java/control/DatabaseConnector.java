@@ -9,18 +9,20 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class DatabaseConnector {
-    private Database db;
-    private boolean dbConnected;
+    private static Database db;
+    private static boolean dbConnected;
+    private static String dbcURL;
 
     public DatabaseConnector(Database db) {
         this.db = db;
         dbConnected = false;
+        dbcURL = "jdbc:mariadb://" + db.getDomain() + "/aarontraynor_timesheet";
     }
 
-    public ArrayList<Employer> readEmployers() throws SQLException {
+    public static ArrayList<Employer> readEmployers() throws SQLException {
         ArrayList<Employer> employers = new ArrayList<>();
 
-        try(Connection con = DriverManager.getConnection("jdbc:mariadb://" + db.getDomain() + "/aarontraynor_timesheet", db.getUsername(), db.getPassword())) {
+        try(Connection con = DriverManager.getConnection(dbcURL, db.getUsername(), db.getPassword())) {
             try(Statement s = con.createStatement()) {
                 try(ResultSet rs = s.executeQuery("SELECT * FROM EMPLOYERS")) {
                     while(rs.next()) {
@@ -36,41 +38,62 @@ public class DatabaseConnector {
         return employers;
     }
 
-//    public ArrayList<Shift> readShiftsFromEmployer(int employerID) throws SQLException {
-//        // Change this method to read all shifts from all employers, then create a construct in memory
-//    }
+    public static ArrayList<Shift> readShiftsFromEmployer(int employerID) throws SQLException {
+        ArrayList<Shift> shifts = new ArrayList<>();
 
-    public String getDatabaseUsername() {
+        try(Connection con = DriverManager.getConnection(dbcURL, db.getUsername(), db.getPassword())) {
+            try(Statement s = con.createStatement()) {
+                try(ResultSet rs = s.executeQuery("SELECT * FROM SHIFTS WHERE EMPLOYER_ID=" + employerID)) {
+                    while(rs.next()) {
+                        int id = rs.getInt("ID");
+                        int employer = rs.getInt("EMPLOYER_ID");
+                        Date startDate = rs.getDate("STARTDATE");
+                        Date endDate = rs.getDate("ENDDATE");
+                        Time startTime = rs.getTime("STARTTIME");
+                        Time endTime = rs.getTime("ENDTIME");
+
+                        Shift newShift = new Shift(employer, startDate, endDate, startTime, endTime);
+                        newShift.setId(id);
+                        shifts.add(newShift);
+                    }
+                }
+            }
+        }
+
+        return shifts;
+    }
+
+    public static String getDatabaseUsername() {
         return db.getUsername();
     }
 
-    public void setDatabaseUsername(String username) {
+    public static void setDatabaseUsername(String username) {
         db.setUsername(username);
     }
 
     // Get database password? Think about how to securely access this information
 
-    public void setDatabasePassword(String password) {
+    public static void setDatabasePassword(String password) {
         db.setPassword(password);
     }
 
-    public String getDatabaseDomain() {
+    public static String getDatabaseDomain() {
         return db.getDomain();
     }
 
-    public void setDatabaseDomain(String domain) {
+    public static void setDatabaseDomain(String domain) {
         db.setDomain(domain);
     }
 
-    public int getDatabasePort() {
+    public static int getDatabasePort() {
         return db.getPort();
     }
 
-    public void setDatabasePort(int port) {
+    public static void setDatabasePort(int port) {
         db.setPort(port);
     }
 
-    public boolean isConnected() {
+    public static boolean isConnected() {
         return dbConnected;
     }
 }

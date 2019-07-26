@@ -14,9 +14,10 @@ import java.util.ArrayList;
 public class Timesheets {
     private static MainWindow program;
     private static Database db;
-    private static DatabaseConnector dbc;
+    private static DatabaseConnector dbc; //TODO: Replace with static references
 
     public static void main(String[] args) {
+        // Take database credentials from user and configure db TODO: ask user if they would like to save these details for the future
         try {
             String username = JOptionPane.showInputDialog("Enter database username:");
             String password = JOptionPane.showInputDialog("Enter database password:");

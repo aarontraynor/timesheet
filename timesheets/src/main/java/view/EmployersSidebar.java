@@ -61,4 +61,8 @@ public class EmployersSidebar extends JPanel {
     public String getSelectedEmployerName() {
         return employerListModel.getElementAt(employerList.getSelectedIndex()).getCompanyName();
     }
+
+    public int getSelectedEmployerID() {
+        return employerListModel.getElementAt(employerList.getSelectedIndex()).getCompanyID();
+    }
 }
